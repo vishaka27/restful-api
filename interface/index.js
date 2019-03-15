@@ -64,3 +64,57 @@ function showDetails() {
         }
     });
 }
+
+function showUsers() {
+    axios.get('http://localhost:5001/listUsers').then(response => {
+        data = response.data;
+        if (data) {
+            // CREATE DYNAMIC TABLE.
+            var table = document.createElement("table");
+
+            // CREATE HTML TABLE HEADER ROW USING THE EXTRACTED HEADERS ABOVE.
+
+            var thead = table.createTHead();                   // TABLE ROW.
+            var col = ["S.No", "Name", "Password", "Profession"];
+            for (var i = 0; i < col.length; i++) {
+                var th = document.createElement("th");      // TABLE HEADER.
+                th.innerHTML = col[i];
+                thead.appendChild(th);
+            }
+            tr = table.insertRow(-1);
+            // ADD JSON DATA TO THE TABLE AS ROWS.
+            for (var i = 0; i < Object.keys(data).length; i++) {
+                var tabCell = tr.insertCell(-1);
+                tabCell.innerHTML = data[`${Object.keys(data)[i]}`];
+            }
+
+            // FINALLY ADD THE NEWLY CREATED TABLE WITH JSON DATA TO A CONTAINER.
+            var divContainer = document.getElementById("showData");
+            divContainer.innerHTML = "";
+            divContainer.appendChild(table);
+            document.getElementById('noData').style.display = 'none';
+        }
+        if (data === '') {
+            var divContainer = document.getElementById('noData');
+            divContainer.innerHTML = 'No records found';
+            divContainer.style.display = 'block';
+            divContainer.style.color = 'red';
+        }
+    });
+}
+
+function deleteData() {
+    const id = document.getElementById('id').value;
+    axios.get('http://localhost:5001/listUsers').then(response => {
+        data = response.data;
+        if ( _.find(data, function(o) { return o.id == id })) {
+            axios.delete('http://localhost:5001/deleteUser/' + id);
+            document.getElementById('noData').style.display = 'none';
+        } else {
+            var divContainer = document.getElementById('noData');
+            divContainer.innerHTML = 'No records found';
+            divContainer.style.display = 'block';
+            divContainer.style.color = 'red';
+        }
+    })
+}

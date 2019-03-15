@@ -6,6 +6,7 @@ const fs = require('fs');
 global.appRoot = path.resolve(__dirname);
 
 const app = express();
+var id = 4;
 
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
@@ -32,6 +33,17 @@ app.get('/listUsers', function(req, res) {
     });
 });
 
+app.delete('/deleteUser/:id', function(req, res) {
+    fs.readFile(__dirname + '/' + 'users.json', 'utf8', function(err, data) {
+        data = JSON.parse(data);
+        delete data['user' + req.params.id];
+        fs.writeFile('users.json',JSON.stringify(data), 'utf-8', function(err){
+            if(err) throw err;
+            res.end(JSON.stringify(data));
+        }); 
+    });
+});
+
 app.use(parser.urlencoded({extended: true}));
 app.use(parser.json({ type: 'application/*+json' }));
 
@@ -55,5 +67,6 @@ app.get('/:id', function(req, res) {
         res.send(user);
      });
 });
+
 
 app.listen(port, () => console.log(`Listening to port ${port}`));

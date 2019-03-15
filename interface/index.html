@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>RESTFul API Services</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.min.js"></script>
     <style>
         .hide {
             display: none;
@@ -22,6 +23,10 @@
     <button onclick="showDetails()">Show Details</button>
     <div id="showData"></div>
     <div id="noData"></div>
+    User data to delete: <input type="text" id="id" />
+    <button onclick="deleteData()">Delete Data</button>
+    Show all user details
+    <button onclick="showUsers()">Show All Users</button>
 </body>
 <script src="./index.js" type="text/javascript"></script>
 </html>
