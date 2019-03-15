@@ -11,7 +11,7 @@ function addUser() {
         users = response.data;
         count = Object.keys(users).length;
         const user = {
-            'user4': {
+            'user': {
                 'name': name,
                 'password': password,
                 'profession': profession,
@@ -21,7 +21,7 @@ function addUser() {
         fetch(posturl, {
             method: 'POST',
             headers: {'Content-Type':'application/x-www-form-urlencoded'},
-            body: JSON.stringify(user.user4)
+            body: JSON.stringify(user.user)
         });
     });
 }
